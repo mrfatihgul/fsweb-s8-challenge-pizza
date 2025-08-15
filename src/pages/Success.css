@@ -1,0 +1,24 @@
+.background {
+    min-height: 100vh;
+    padding-bottom: 30px;
+    background-color: #CE2829;
+    box-sizing: border-box;
+}
+
+.feedback {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 200;
+  font-size: 4.7rem;
+  transform: scaleX(0.85) scaleY(1.1);
+  letter-spacing: -0.05em;
+}
+
+.feedback p {
+  margin: 0;
+}
+
+.text-xxxxxxl {
+    font-size: 2rem;
+    font-family: "Satisfy";
+    color: #FDC913;
+}
