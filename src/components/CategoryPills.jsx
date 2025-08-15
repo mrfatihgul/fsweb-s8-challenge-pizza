@@ -35,7 +35,7 @@ function CategoryPills() {
     }
 
     return (
-    <div className="flex gap-5">
+    <div className="flex max-sm:flex-col gap-5">
         {KategoriDiz2()}
     </div>
     )

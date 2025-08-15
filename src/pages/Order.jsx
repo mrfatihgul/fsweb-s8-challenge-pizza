@@ -121,10 +121,10 @@ function Order({ setOrderData }) {
           <section className="bg-[#FAF7F2] flex flex-col items-center justify-start w-full">
 
             <nav className="w-full flex flex-col items-center justify-start gap-6 pb-5 bg-[#FAF7F2] text-xs">
-              <div>
+              <div className='w-1/4 xl:w-2/5'>
                 <img src='images/iteration-2-images/pictures/form-banner.png'></img>
               </div>
-              <div className='flex gap-1 screenwidth w-1/4 mt-4'>
+              <div className='flex gap-1 screenwidth w-1/4 xl:w-1/3 mt-4'>
                 <Link to="/">
                   <span className='text-black brightness-180 contrast-200 hover:text-[#CE2829]'>Anasayfa</span>
                 </Link>
@@ -135,24 +135,24 @@ function Order({ setOrderData }) {
               </div>
             </nav>
             {/* Yazılar*/}
-            <div className="screenwidth w-1/4 pt-5 pb-7 font-semibold text-[#292929]">    
+            <div className="screenwidth w-1/4 xl:w-1/3 pt-5 pb-7 font-semibold text-[#292929]">    
               <h2>Position Absolute Acı Pizza</h2>
             </div>
-            <div className='screenwidth w-1/4 flex flex-row items-center justify-start'>
+            <div className='screenwidth w-1/4 xl:w-1/3 flex flex-row items-center justify-start'>
               <h1 className='font-bold text-xl text-[#292929]'>85.50₺</h1>
               <p className='font-extralight text-xs ml-[60%]'>4.9</p>
               <div className='ml-auto'>
                 <p className='font-extralight text-xs'>(200)</p>
               </div>
             </div>
-            <div className='screenwidth w-1/4 flex flex-row justify-start pt-5 pb-8 text-[#5F5F5F] font-normal'>
+            <div className='screenwidth w-1/4 xl:w-1/3 flex flex-row justify-start pt-5 pb-8 text-[#5F5F5F] font-normal'>
               <p className='font-normal leading-loose text-sm'>Frontend Dev olarak hala position:absolute kullanıyorsan bu çok acı pizza tam sana göre. Pizza, domates, peynir ve genellikle çeşitli diğer malzemelerle kaplanmış, daha sonra geleneksel olarak odun ateşinde bir fırında yüksek sıcaklıkta pişirilen, genellikle yuvarlak, düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan kökenli lezzetli bir yemektir..Küçük bir pizzaya bazen pizzetta denir.</p>
             </div>
           </section>
 
           {/* Pizza Boyutu Seçme */}
           <section className='w-full flex justify-center pb-8'>
-            <div className='screenwidth w-1/4 flex'>
+            <div className='screenwidth w-1/4 xl:w-1/3 flex'>
               <div className='screenwidth w-1/2 flex flex-col justify-start gap-6'>
                 <div className='flex flex-col text-xs justify-start gap-4 mt-10'>
                   <h2 className='font-semibold text-lg'>Boyut Seç *</h2>
@@ -186,9 +186,9 @@ function Order({ setOrderData }) {
                   
                   <select className="w-full bg-[#F8F5EF] text-gray-700 text-xs py-3 px-4 rounded-lg appearance-none focus:outline-none" defaultValue="" required name="hamur">
                     <option value="" disabled hidden>- Hamur Kalınlığı Seç -</option>
-                    <option value="Süpper İnce">İnce Hamur</option>
-                    <option value="Süpper Normal">Normal Hamur</option>
-                    <option value="Süpper Kalın">Kalın Hamur</option>
+                    <option value="Süpper İnce">Süpper İnce</option>
+                    <option value="Süpper Normal">Süpper Normal</option>
+                    <option value="Süpper Kalın">Süpper Kalın</option>
                   </select>
                 </div>
 
@@ -201,11 +201,11 @@ function Order({ setOrderData }) {
             <div className='screenwidth w-1/4 flex justify-start font-semibold'>
               <h2>Ek Malzemeler</h2>
             </div>
-            <div className="screenwidth w-1/4 flex justify-start">
+            <div className="screenwidth w-1/4 xl:w-1/3 flex justify-start">
               <p className='text-[#5F5F5F] font-normal text-sm'>En fazla 10 malzeme seçebilirsiniz. 5₺</p>
             </div>
             
-            <div className='screenwidth w-1/4 flex justify-start malzemeler-kapsayici'>
+            <div className='screenwidth w-1/4 xl:w-1/3 flex justify-start malzemeler-kapsayici'>
               <div className='screenwidth w-1/3 flex flex-col justify-start gap-8 malzeme-sutun'>
                 <div className='flex items-center'>
                   <input type="checkbox" name="toppings" value="Pepperoni" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
@@ -264,7 +264,7 @@ function Order({ setOrderData }) {
                   <label className="text-xs font-medium ml-1">Ananas</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Kabak" className="checkbox h-6 w-6" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Kabak" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Kabak</label>
                 </div>
               </div>
@@ -274,12 +274,23 @@ function Order({ setOrderData }) {
           {/* Sipariş Notu, Adet Ekleme ve Sipariş Ver Butonu*/}
           <section className="flex flex-col items-center justify-start w-full">
             {/* Başlık: Sipariş Notu */}
-            <div className="screenwidth w-1/4 flex justify-start font-semibold pb-5">
+            <div className="screenwidth w-1/4 xl:w-1/3 flex justify-start font-semibold pb-5">
               <h2>Sipariş Notu</h2>
             </div>
 
+            <div className='screenwidth w-1/4 xl:w-1/3 flex justify-start font-semibold pb-4'>
+              <input
+                type="text"
+                value={name}
+                onChange={(e)=> setName(e.target.value)}
+                minLength={3}
+                placeholder="İsminiz"
+                className="bg-[#F8F5EF] text-gray-700 text-xs py-3 px-4 font-light rounded-lg appearance-none focus:outline-none"
+              />
+            </div>
+
             {/* Sipariş Notu Input Alanı */}
-            <div className='screenwidth w-1/4 flex justify-start font-semibold pb-6'>
+            <div className='screenwidth w-1/4 xl:w-1/3 flex justify-start font-semibold pb-6'>
               <input 
                 type="text" 
                 value={siparisNotu} 
@@ -290,10 +301,10 @@ function Order({ setOrderData }) {
             </div>
 
             {/* Yatay Ayırıcı Çizgi */}
-            <div className="flex justify-start screenwidth w-1/4 h-px bg-gray-300 mb-6"></div>
+            <div className="flex justify-start screenwidth w-1/4 xl:w-1/3 h-px bg-gray-300 mb-6"></div>
 
             {/* Adet Seçim Alanı ve Yanındaki Boşluk */}
-            <div className='flex flex-row screenwidth w-1/4 justify-start pb-10'>
+            <div className='flex flex-row screenwidth w-1/4 xl:w-1/3 justify-start pb-10'>
               
               {/* Adet Butonları (Sol Kısım - 1/3) */}
               <div className='flex flex-col w-1/3'>
@@ -306,18 +317,6 @@ function Order({ setOrderData }) {
 
               {/* Sipariş Ver Butonu (Sağ Kısım - 2/3) */}
               <div className='flex flex-col w-2/3 pl-[1.5rem]'>
-                {/* İsim Alanı */}
-                <div className='screenwidth w-1/4 flex justify-start font-semibold pb-4'>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e)=> setName(e.target.value)}
-                    minLength={3}
-                    required
-                    placeholder="İsminiz (min 3 karakter)"
-                    className="bg-[#F8F5EF] text-gray-700 text-xs py-3 px-4 rounded-lg appearance-none focus:outline-none"
-                  />
-                </div>
                 <div className="py-1 bg-[#F8F5EF] text-gray-700 text-xs font-light py-3 px-4 rounded-lg appearance-none focus:outline-nonew-full">
                   <div className='p-6 flex flex-col gap-3'>
                     <span className='text-xs font-semibold'>Sipariş Toplamı</span>

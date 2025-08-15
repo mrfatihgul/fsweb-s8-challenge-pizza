@@ -19,3 +19,17 @@
 .elyazisi {
     font-family: "Satisfy";
 }
+
+.text-xxxxxl {
+    font-size: 4.5rem
+}
+
+.lezzetus {
+    font-family: "Quattrocento";
+}
+
+@media (max-width: 768px) {
+    .slogan {
+        font-size: 3rem;
+    }
+}

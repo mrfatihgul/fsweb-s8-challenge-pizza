@@ -6,7 +6,7 @@ function Footer() {
                 <div className="flex flex-col space-y-3 mt-8">
                     <img src="images/iteration-2-images/footer/logo-footer.svg" className="w-30 mb-10"></img>
                     <div className="flex gap-2">
-                        <img src="images/iteration-2-images/footer/icons/icon-1.png"/>
+                        <img src="images/iteration-2-images/footer/icons/icon-1.png" className="h-8"/>
                         <p className="text-white">341 Londonderry Road, Istanbul Türkiye</p>
                     </div>
                     <div className="flex gap-2">

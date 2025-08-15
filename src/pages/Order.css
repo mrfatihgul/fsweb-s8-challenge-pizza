@@ -12,6 +12,10 @@ a, h1, h2, p {
   width: 9rem;
 }
 
+.firsat {
+  font-family: "Satisfy";
+} 
+
 @media (max-width: 768px) {
   /* 2 sütun yap */
   .malzemeler-kapsayici {

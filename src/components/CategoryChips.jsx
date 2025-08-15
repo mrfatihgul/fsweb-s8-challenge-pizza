@@ -21,7 +21,7 @@ function CategoryChips() {
     }
 
     return (
-    <div className="flex gap-20">
+    <div className="flex max-sm:flex-col gap-20">
         {KategoriDiz()}
     </div>
     )
