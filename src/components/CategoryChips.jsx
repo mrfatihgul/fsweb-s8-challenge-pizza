@@ -14,7 +14,7 @@ function CategoryChips() {
             return (
                 <button key={kategori.id} className="flex max-sm:flex-col items-center gap-3">
                     <img src={kategori.icon} className="h-10 w-10 min-h-[2rem] min-w-[2rem] flex-shrink-0"/>
-                    <span className="max-sm:text-xs">{kategori.label}</span>
+                    <span className="max-sm:text-xs font-semibold">{kategori.label}</span>
                 </button>
             )
         })

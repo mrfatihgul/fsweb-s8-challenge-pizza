@@ -19,7 +19,7 @@ function Home() {
             KOD ACIKTIRIR PİZZA, DOYURUR
         </div>
         <Link to="/order">
-            <span className="buton font-semibold rounded-full block mt-1 bg-[#FDC913] py-4 px-10 hover:bg-[#e5b90f]">
+            <span className="buton font-semibold rounded-full block mt-1 bg-[#FDC913] py-2.5 px-12 hover:bg-[#e5b90f]">
                 ACIKTIM
             </span>
         </Link>
@@ -39,13 +39,13 @@ function Home() {
               Position: Absolute Acı Burger
             </div>
             <div className="pl-10 pt-5 flex text-xl text-white">
-              <button className="pt-3 pb-3 pr-4 pl-4 rounded-full bg-white text-[#CE2829] text-xs">
+              <button className="pt-3 pb-3 pr-4 pl-4 rounded-full bg-white text-[#CE2829] text-xs font-semibold">
                 SİPARİŞ VER
               </button>
             </div>
           </div>
           <div className="max-sm:aspect-square bg-no-repeat max-sm:bg-right max-sm:bg-white/15 bg-blend-overlay bg-[url('images/iteration-2-images/cta/kart-2.png')] h-60 rounded-lg flex flex-col">
-            <div className="max-sm:!text-lg pl-10 pt-10 flex text-xl w-50 text-white text-left font-semibold">
+            <div className="max-sm:!text-lg pl-10 pt-10 flex text-[25px] w-50 text-white text-left font-semibold">
               Hackathlon Burger Menü
             </div>
             <div className="pl-10 pt-5 flex text-xl text-white">
@@ -55,8 +55,8 @@ function Home() {
             </div>
           </div> 
           <div className="max-sm:aspect-square bg-no-repeat max-sm:bg-right max-sm:bg-white/15 bg-blend-overlay bg-[url('images/iteration-2-images/cta/kart-3.png')] h-60 rounded-lg flex flex-col">
-            <div className="pl-10 pt-10 flex text-xl text-black text-left font-normal">
-              <div className="w-40 font-semibold max-sm:!text-lg">
+            <div className="pl-10 pt-10 flex text-[25px] text-black text-left font-normal">
+              <div className="w-50 font-bold max-sm:!text-lg">
                 <span className="text-red-500 mr-1">Çoooook</span>
                 <span>hızlı npm gibi kurye</span>
               </div>

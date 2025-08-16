@@ -17,7 +17,7 @@ function CategoryPills() {
         return categories.map(function(kategori){
             if (selected === kategori.id) {
                 return (
-                    <button key={kategori.id} className="rounded-full bg-[#292929] text-white p-5 flex max-sm:flex-col items-center gap-3" onClick={function () {setSelected(kategori.id);}}>
+                    <button key={kategori.id} className="rounded-full bg-[#292929] text-white p-5 flex max-sm:flex-col items-center gap-3 font-semibold" onClick={function () {setSelected(kategori.id);}}>
                         <img src={kategori.icon} className="h-10 w-10 min-h-[2rem] min-w-[2rem] flex-shrink-0" />
                         <span className="max-sm:text-xs">{kategori.label}</span>
                     </button>
@@ -25,7 +25,7 @@ function CategoryPills() {
         }
             else {
                 return (
-                    <button key={kategori.id} className="rounded-full bg-white text-black p-5 flex max-sm:flex-col items-center gap-3" onClick={function () {setSelected(kategori.id);}}>
+                    <button key={kategori.id} className="rounded-full bg-white text-black p-5 flex max-sm:flex-col items-center gap-3 font-semibold" onClick={function () {setSelected(kategori.id);}}>
                         <img src={kategori.icon} className="h-10 w-10 min-h-[2rem] min-w-[2rem] flex-shrink-0" />
                         <span className="max-sm:text-xs">{kategori.label}</span>
                     </button>

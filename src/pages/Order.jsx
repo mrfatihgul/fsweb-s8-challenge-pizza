@@ -53,8 +53,8 @@ function Order({ setOrderData }) {
         adet: adet,
       };
 
-      setOrderData(payload);
       const cevap = await axios.post("https://jsonplaceholder.typicode.com/posts", payload);
+      setOrderData(cevap.data);
       console.log("2) POST SONRASI, CEVAP:", cevap.status, cevap.data);
 
       navigate("/success");
