@@ -9,14 +9,14 @@ function PromoCard(){
     function KutulariDiz() {
         return cards.map(function(card) {
             return (
-            <div key={card.id} className="rounded-xl w-70 h-75 bg-white text-black p-5 flex flex-col items-center">
-                <img src={card.icon} className="h-50 w-50" />
-                <div className="mt-5 w-full">
-                    <span className="text-left font-semibold">{card.label}</span>
-                    <div className="flex justify-between text-xs">
-                        <span className="font-extralight">{card.puan}</span>
-                        <span className="font-extralight">{card.yorum}</span>
-                        <span className="font-bold">{card.fiyat}</span>
+            <div key={card.id} className="rounded-xl w-100 h-100 bg-white text-black p-5 flex flex-col items-center">
+                <img src={card.icon} className="h-75 w-75" />
+                <div className="w-full">
+                    <span className="mt-3 text-left font-semibold text-lg">{card.label}</span>
+                    <div className="flex justify-between mt-4">
+                        <span className="font-extralight text-xs">{card.puan}</span>
+                        <span className="font-extralight text-xs">{card.yorum}</span>
+                        <span className="font-bold text-base relative -top-1">{card.fiyat}</span>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,16 @@
 import { useState } from 'react'
-import './Order.css'
+import "./Order.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Order({ setOrderData }) {
+
+  let sonToastId = null;
+  
   {/*State Tanımları*/}
   const [name, setName] = useState("");
   const [pizzaSize, setPizzaSize] = useState("");
@@ -55,8 +60,12 @@ function Order({ setOrderData }) {
       navigate("/success");
       console.log("3) NAVIGATE ÇAĞRILDI");
     } catch (hata) {
-      console.error("Sipariş gönderilirken hata oluştu: ", hata);
-    }
+        console.error("Sipariş gönderilirken hata oluştu: ", hata);
+
+        if(!toast.isActive(sonToastId)){
+          sonToastId = toast.error("Sipariş gönderilemedi! Lütfen internet bağlantınızı kontrol edin.");
+  }
+}
   }
 
   function sayiAzalt() {
@@ -86,17 +95,19 @@ function Order({ setOrderData }) {
       if (seciliyorMu) {
         if (x >= MAX_TOPPINGS) {
           tiklamaBilgisi.preventDefault();
-          tiklamaBilgisi.target.checked = false;
-          alert("En fazla " + MAX_TOPPINGS + " malzeme seçebilirsin.");
+          if(!toast.isActive(sonToastId)){
+            sonToastId = toast.error("En fazla " + MAX_TOPPINGS + " malzeme seçebilirsin.");
+          } 
           return x;
         }
         return x + 1;
       } else {
         if (x <= MIN_TOPPINGS) {
           tiklamaBilgisi.preventDefault();
-          tiklamaBilgisi.target.checked = true;
-          alert("En az " + MIN_TOPPINGS + " malzeme seçmelisin.");
-          return x;
+          if(!toast.isActive(sonToastId)){
+            sonToastId = toast.error("En az " + MIN_TOPPINGS + " malzeme seçmelisin.");
+          }
+            return x;
         }
         return x-1;
       }
@@ -121,10 +132,10 @@ function Order({ setOrderData }) {
           <section className="bg-[#FAF7F2] flex flex-col items-center justify-start w-full">
 
             <nav className="w-full flex flex-col items-center justify-start gap-6 pb-5 bg-[#FAF7F2] text-xs">
-              <div className='w-1/4 xl:w-2/5'>
+              <div className='w-1/4'>
                 <img src='images/iteration-2-images/pictures/form-banner.png'></img>
               </div>
-              <div className='flex gap-1 screenwidth w-1/4 xl:w-1/3 mt-4'>
+              <div className='flex gap-1 screenwidth w-1/4 mt-4'>
                 <Link to="/">
                   <span className='text-black brightness-180 contrast-200 hover:text-[#CE2829]'>Anasayfa</span>
                 </Link>
@@ -135,56 +146,56 @@ function Order({ setOrderData }) {
               </div>
             </nav>
             {/* Yazılar*/}
-            <div className="screenwidth w-1/4 xl:w-1/3 pt-5 pb-7 font-semibold text-[#292929]">    
+            <div className="screenwidth w-1/4 pt-5 pb-7 font-semibold text-[#292929]">    
               <h2>Position Absolute Acı Pizza</h2>
             </div>
-            <div className='screenwidth w-1/4 xl:w-1/3 flex flex-row items-center justify-start'>
+            <div className='screenwidth w-1/4 flex flex-row items-center justify-start'>
               <h1 className='font-bold text-xl text-[#292929]'>85.50₺</h1>
               <p className='font-extralight text-xs ml-[60%]'>4.9</p>
               <div className='ml-auto'>
                 <p className='font-extralight text-xs'>(200)</p>
               </div>
             </div>
-            <div className='screenwidth w-1/4 xl:w-1/3 flex flex-row justify-start pt-5 pb-8 text-[#5F5F5F] font-normal'>
+            <div className='screenwidth w-1/4 flex flex-row justify-start pt-5 pb-8 text-[#5F5F5F] font-normal'>
               <p className='font-normal leading-loose text-sm'>Frontend Dev olarak hala position:absolute kullanıyorsan bu çok acı pizza tam sana göre. Pizza, domates, peynir ve genellikle çeşitli diğer malzemelerle kaplanmış, daha sonra geleneksel olarak odun ateşinde bir fırında yüksek sıcaklıkta pişirilen, genellikle yuvarlak, düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan kökenli lezzetli bir yemektir..Küçük bir pizzaya bazen pizzetta denir.</p>
             </div>
           </section>
 
           {/* Pizza Boyutu Seçme */}
           <section className='w-full flex justify-center pb-8'>
-            <div className='screenwidth w-1/4 xl:w-1/3 flex'>
+            <div className='screenwidth w-1/4 flex'>
               <div className='screenwidth w-1/2 flex flex-col justify-start gap-6'>
                 <div className='flex flex-col text-xs justify-start gap-4 mt-10'>
                   <h2 className='font-semibold text-lg'>Boyut Seç *</h2>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 max-sm:gap-1">
                   {/* S */}
                   <div>
                     <input id="size-s" name="pizza-size" type="radio" value="S" className="peer sr-only" onChange={handlePizzaSizeChange}/>
-                    <label htmlFor="size-s" className="flex items-center justify-center w-12 h-12 rounded-full bg-[#F8F5EF] text-gray-600 transition peer-checked:bg-black peer-checked:text-white">S</label>
+                    <label htmlFor="size-s" className="flex items-center justify-center w-12 h-12 rounded-full bg-[#F8F5EF] text-[#292929] transition peer-checked:bg-black peer-checked:text-white">S</label>
                   </div>
 
                   {/* M */}
                   <div>
                     <input id="size-m" name="pizza-size" type="radio" value="M" className="peer sr-only" onChange={handlePizzaSizeChange}/>
-                    <label htmlFor="size-m" className="flex items-center justify-center w-12 h-12 rounded-full bg-[#F8F5EF] text-gray-600 transition peer-checked:bg-black peer-checked:text-white">M</label>
+                    <label htmlFor="size-m" className="flex items-center justify-center w-12 h-12 rounded-full bg-[#F8F5EF] text-[#292929] transition peer-checked:bg-black peer-checked:text-white">M</label>
                   </div>
 
                   {/* L */}
                   <div>
                     <input id="size-l" name="pizza-size" type="radio" value="L" className="peer sr-only" onChange={handlePizzaSizeChange}/>
-                    <label htmlFor="size-l" className="flex items-center justify-center w-12 h-12 rounded-full bg-[#F8F5EF] text-gray-600 transition peer-checked:bg-black peer-checked:text-white">L</label>
+                    <label htmlFor="size-l" className="flex items-center justify-center w-12 h-12 rounded-full bg-[#F8F5EF] text-[#292929] transition peer-checked:bg-black peer-checked:text-white">L</label>
                   </div>
                 </div>
                 </div>
               </div>
               <div className='screenwidth w-1/2 flex flex-col justify-start gap-6'>
                 <div className="mb-6 mt-10">
-                  <label className="block text-lg font-semibold text-gray-800 mb-5">
+                  <label className="block text-lg font-semibold text-[#292929] mb-5">
                     Hamur Seç 
-                    <span className="ml-2 text-red-500">*</span>
+                    <span className="ml-2 text-[#CE2829]">*</span>
                   </label>
                   
-                  <select className="w-full bg-[#F8F5EF] text-gray-700 text-xs py-3 px-4 rounded-lg appearance-none focus:outline-none" defaultValue="" required name="hamur">
+                  <select className="w-full bg-[#F8F5EF] text-[#292929] text-xs py-3 px-4 rounded-lg appearance-none focus:outline-none" defaultValue="" required name="hamur">
                     <option value="" disabled hidden>- Hamur Kalınlığı Seç -</option>
                     <option value="Süpper İnce">Süpper İnce</option>
                     <option value="Süpper Normal">Süpper Normal</option>
@@ -201,70 +212,70 @@ function Order({ setOrderData }) {
             <div className='screenwidth w-1/4 flex justify-start font-semibold'>
               <h2>Ek Malzemeler</h2>
             </div>
-            <div className="screenwidth w-1/4 xl:w-1/3 flex justify-start">
+            <div className="screenwidth w-1/4 flex justify-start">
               <p className='text-[#5F5F5F] font-normal text-sm'>En fazla 10 malzeme seçebilirsiniz. 5₺</p>
             </div>
             
-            <div className='screenwidth w-1/4 xl:w-1/3 flex justify-start malzemeler-kapsayici'>
+            <div className='screenwidth w-1/4 flex justify-start malzemeler-kapsayici'>
               <div className='screenwidth w-1/3 flex flex-col justify-start gap-8 malzeme-sutun'>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Pepperoni" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Pepperoni" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Pepperoni</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Sosis" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Sosis" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Sosis</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Kanada Jambonu" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Kanada Jambonu" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Kanada Jambonu</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Tavuk Izgara" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Tavuk Izgara" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Tavuk Izgara</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Soğan" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Soğan" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Soğan</label>
                 </div>
               </div>
               <div className='screenwidth w-1/3 flex flex-col justify-start gap-8 malzeme-sutun'>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Domates" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Domates" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Domates</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Mısır" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Mısır" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Mısır</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Sucuk" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Sucuk" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Sucuk</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Jalepeno" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Jalepeno" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Jalepeno</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Sarımsak" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Sarımsak" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Sarımsak</label>
                 </div>
               </div>
               <div className='screenwidth w-1/3 flex flex-col justify-start gap-8 malzeme-sutun'>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Biber" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Biber" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Biber</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Sucuk" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Sucuk" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Sucuk</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Ananas" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Ananas" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Ananas</label>
                 </div>
                 <div className='flex items-center'>
-                  <input type="checkbox" name="toppings" value="Kabak" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-yellow-500 rounded" onChange={malzemeUyarıMesajı}/>
+                  <input type="checkbox" name="toppings" value="Kabak" className="appearance-none checkbox h-6 w-6 bg-gray-100 checked:bg-[#FDC913] rounded" onChange={malzemeUyarıMesajı}/>
                   <label className="text-xs font-medium ml-1">Kabak</label>
                 </div>
               </div>
@@ -274,37 +285,37 @@ function Order({ setOrderData }) {
           {/* Sipariş Notu, Adet Ekleme ve Sipariş Ver Butonu*/}
           <section className="flex flex-col items-center justify-start w-full">
             {/* Başlık: Sipariş Notu */}
-            <div className="screenwidth w-1/4 xl:w-1/3 flex justify-start font-semibold pb-5">
+            <div className="screenwidth w-1/4 flex justify-start font-semibold pb-5">
               <h2>Sipariş Notu</h2>
             </div>
 
-            <div className='screenwidth w-1/4 xl:w-1/3 flex justify-start font-semibold pb-4'>
+            <div className='screenwidth w-1/4 flex justify-start font-semibold pb-4'>
               <input
                 type="text"
                 value={name}
                 onChange={(e)=> setName(e.target.value)}
                 minLength={3}
                 placeholder="İsminiz"
-                className="bg-[#F8F5EF] text-gray-700 text-xs py-3 px-4 font-light rounded-lg appearance-none focus:outline-none"
+                className="placeholder:text-xs bg-[#F8F5EF] text-[#292929] text-xs py-3 px-4 font-light rounded-lg appearance-none focus:outline-none"
               />
             </div>
 
             {/* Sipariş Notu Input Alanı */}
-            <div className='screenwidth w-1/4 xl:w-1/3 flex justify-start font-semibold pb-6'>
+            <div className='screenwidth w-1/4 flex justify-start font-semibold pb-6'>
               <input 
                 type="text" 
                 value={siparisNotu} 
                 onChange={notGir} 
                 placeholder="Siparişine eklemek istediğin bir not var mı?" 
-                className="placeholder:text-xs placeholder:text-[#5F5F5F] bg-[#F8F5EF] text-gray-700 text-xs font-light py-3 px-4 rounded-lg appearance-none focus:outline-none w-full"
+                className="placeholder:text-xs placeholder:text-[#5F5F5F] bg-[#F8F5EF] text-[#292929] text-xs font-light py-3 px-4 rounded-lg appearance-none focus:outline-none w-full"
               />
             </div>
 
             {/* Yatay Ayırıcı Çizgi */}
-            <div className="flex justify-start screenwidth w-1/4 xl:w-1/3 h-px bg-gray-300 mb-6"></div>
+            <div className="flex justify-start screenwidth w-1/4 h-px bg-gray-300 mb-6"></div>
 
             {/* Adet Seçim Alanı ve Yanındaki Boşluk */}
-            <div className='flex flex-row screenwidth w-1/4 xl:w-1/3 justify-start pb-10'>
+            <div className='flex flex-row screenwidth w-1/4 justify-start pb-10'>
               
               {/* Adet Butonları (Sol Kısım - 1/3) */}
               <div className='flex flex-col w-1/3'>
@@ -317,7 +328,7 @@ function Order({ setOrderData }) {
 
               {/* Sipariş Ver Butonu (Sağ Kısım - 2/3) */}
               <div className='flex flex-col w-2/3 pl-[1.5rem]'>
-                <div className="py-1 bg-[#F8F5EF] text-gray-700 text-xs font-light py-3 px-4 rounded-lg appearance-none focus:outline-nonew-full">
+                <div className="py-1 bg-[#F8F5EF] text-[#292929] text-xs font-light py-3 px-4 rounded-lg appearance-none focus:outline-nonew-full">
                   <div className='p-6 flex flex-col gap-3'>
                     <span className='text-xs font-semibold'>Sipariş Toplamı</span>
                     <div className='flex flex-row justify-between'>
@@ -330,7 +341,7 @@ function Order({ setOrderData }) {
                     </div>
                   </div>
                 </div>
-                <div className='py-2 border bg-[#FDC913]  hover:bg-yellow-500 border-[#FDC913] rounded w-full'>
+                <div className='py-2 border bg-[#FDC913]  hover:bg-[#FDC913] border-[#FDC913] rounded w-full'>
                   <button type="submit" disabled={!isValid} className='flex flex-row justify-center text-xs w-full'>
                     SİPARİŞ VER
                   </button>
@@ -346,6 +357,7 @@ function Order({ setOrderData }) {
           </section>
         </main>
       </form>
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   )
 }

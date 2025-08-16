@@ -15,7 +15,7 @@ function Success({ orderData }) {
         <div className='feedback text-white'>
             SİPARİŞ ALINDI
         </div>
-        <div className="mt-10 h-px bg-gray-300 mb-6"></div>
+        <div className="mt-10 h-px bg-[#5F5F5F] mb-6"></div>
         <div className='w-1/2 mx-auto'>
           <h2 className='mt-7 mb-15 text-xl text-white'>Position Absolute Acı Pizza</h2>
           <div className="text-left w-3/5 mx-auto">
@@ -33,7 +33,7 @@ function Success({ orderData }) {
             </p>
           </div>
 
-          <div className="mt-13 border border-gray-300 rounded w-4/5 mx-auto">
+          <div className="mt-13 border border-[#5F5F5F] rounded w-4/5 mx-auto">
             <div className='p-10 flex flex-col'>
               <span className='text-l text-white font-semibold text-left mb-5'>Sipariş Toplamı</span>
               <p className='text-white mb-1 flex justify-between'>

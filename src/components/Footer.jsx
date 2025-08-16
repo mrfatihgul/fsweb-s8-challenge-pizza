@@ -48,7 +48,7 @@ function Footer() {
                     </div>
                 </div>
             </div>
-            <div className=" flex justify-between border-gray-600 border-t pt-6 mt-15 text-gray-300 mt-6">
+            <div className=" flex justify-between border-[#292929] border-t pt-6 mt-15 text-gray-300 mt-6">
                 <p className="text-white">2023 Teknolojik Yemekler</p>
                 <img src="images/iteration-2-images/footer/twitter.png" className="text-white w-5 h-4"/>
             </div>
