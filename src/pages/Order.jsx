@@ -341,7 +341,7 @@ function Order({ setOrderData }) {
                     </div>
                   </div>
                 </div>
-                <div className='py-2 border bg-[#FDC913]  hover:bg-[#FDC913] border-[#FDC913] rounded w-full'>
+                <div className='py-2 border bg-[#FDC913] hover:bg-yellow-500 border-[#FDC913] rounded w-full'>
                   <button type="submit" disabled={!isValid} className='flex flex-row justify-center text-xs w-full'>
                     SİPARİŞ VER
                   </button>
