@@ -20,10 +20,6 @@ function Success({ orderData }) {
           <h2 className='mt-7 mb-15 text-xl text-white'>Position Absolute Acı Pizza</h2>
           <div className="text-left w-3/5 mx-auto">
             <p className='text-white mb-3'>
-              <span className='font-extralight'>Sipariş ID: </span>
-              <span className='font-semibold'>{orderData.id}</span>
-            </p>
-            <p className='text-white mb-3'>
               <span className='font-extralight'>Boyut: </span>
               <span className='font-semibold'>{orderData.size}</span>
             </p>
