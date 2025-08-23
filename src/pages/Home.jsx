@@ -1,9 +1,9 @@
 import "./Home.css"
-import CategoryChips from "../components/CategoryChips";
-import CategoryPills from "../components/CategoryPills.jsx";
+import CategoryChips from "../components/home/CategoryChips.jsx";
+import CategoryPills from "../components/home/CategoryPills.jsx";
 import { Link } from "react-router-dom";
-import PromoCard from "../components/PromoCard.jsx";
-import Footer from "../components/Footer.jsx";
+import PromoCard from "../components/home/PromoCard.jsx";
+import Footer from "../components/common/Footer.jsx";
 
 function Home() {
   return (

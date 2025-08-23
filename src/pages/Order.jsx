@@ -3,18 +3,25 @@ import "./Order.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer.jsx";
+import Footer from "../components/common/Footer.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { pizza, toppingsList } from "../data";
+import DoughSelector from '../components/order/DoughSelector.jsx';
+import NotesInput from '../components/order/NotesInput.jsx';
+
+const BASE_PRICE = pizza.basePrice;
+const TOPPING_PRICE = pizza.toppingsPrice;
 
 function Order({ setOrderData }) {
 
-  let sonToastId = null;
+  let sonToastId = null
+
   
   {/*State Tanımları*/}
   const [name, setName] = useState("");
   const [pizzaSize, setPizzaSize] = useState("");
-  const [adet, setAdet] = useState(0);
+  const [adet, setAdet] = useState(1);
   const [siparisNotu, setSiparisNotu] = useState("");
   const [seciliMalzemeSayısı, seciliMalzemeSayısınıAyarla] = useState(0);
   const [toppings, setToppings] = useState(new Set());
@@ -25,6 +32,19 @@ function Order({ setOrderData }) {
   {/*Sabitler*/}
   const MIN_TOPPINGS = 4;
   const MAX_TOPPINGS = 10;
+
+
+  const secimlerTutari = toppings.size * TOPPING_PRICE;
+
+  // seçilen boyut fiyat farkı
+  const sizeExtra = pizza.sizeOptions[pizzaSize] || 0;
+
+  // seçilen hamur fiyat farkı
+  const hamur = document.querySelector("select[name='hamur']")?.value || "";
+  const doughExtra = pizza.doughOptions[hamur] || 0;
+
+  // toplam
+  const toplamTutar = (BASE_PRICE + secimlerTutari + sizeExtra + doughExtra) * adet;
 
   const toppingsCount = toppings.size;
   const isValid =
@@ -51,6 +71,8 @@ function Order({ setOrderData }) {
         notes: siparisNotu.trim(),
         hamur: formVerisi.get("hamur"),
         adet: adet,
+        secimlerTutari: secimlerTutari.toFixed(2),
+        toplamTutar: toplamTutar.toFixed(2)
       };
 
       const cevap = await axios.post("https://jsonplaceholder.typicode.com/posts", payload);
@@ -88,30 +110,43 @@ function Order({ setOrderData }) {
     setSiparisNotu(girdiGeldi.target.value);
   }
 
-  function malzemeUyarıMesajı(tiklamaBilgisi) {
-    const seciliyorMu = tiklamaBilgisi.target.checked;
+  function malzemeUyarıMesajı(e) {
+  const seciliyorMu = e.target.checked;
+  const malzeme = e.target.value;
 
-    seciliMalzemeSayısınıAyarla(function(x) {
-      if (seciliyorMu) {
-        if (x >= MAX_TOPPINGS) {
-          tiklamaBilgisi.preventDefault();
-          if(!toast.isActive(sonToastId)){
-            sonToastId = toast.error("En fazla " + MAX_TOPPINGS + " malzeme seçebilirsin.");
-          } 
-          return x;
+  // önce toppings state'ini güncelle
+  setToppings(eskiSet => {
+    const yeni = new Set(eskiSet); // eski setin kopyasını al
+    if (seciliyorMu) {
+      yeni.add(malzeme); // yeni malzemeyi ekle
+    } else {
+      yeni.delete(malzeme); // seçimi kaldır
+    }
+    return yeni; // React'e yeni set'i ver
+  });
+
+  // sonra seciliMalzemeSayısı'nı güncelle
+  seciliMalzemeSayısınıAyarla(sayi => {
+    if (seciliyorMu) {
+      if (sayi >= MAX_TOPPINGS) {
+        e.preventDefault();
+        if(!toast.isActive(sonToastId)){
+          sonToastId = toast.error("En fazla " + MAX_TOPPINGS + " malzeme seçebilirsin.");
         }
-        return x + 1;
-      } else {
-        if (x <= MIN_TOPPINGS) {
-          tiklamaBilgisi.preventDefault();
-          if(!toast.isActive(sonToastId)){
-            sonToastId = toast.error("En az " + MIN_TOPPINGS + " malzeme seçmelisin.");
-          }
-            return x;
-        }
-        return x-1;
+        return sayi;
       }
-    });
+      return sayi + 1;
+    } else {
+      if (sayi <= MIN_TOPPINGS) {
+        e.preventDefault();
+        if(!toast.isActive(sonToastId)){
+          sonToastId = toast.error("En az " + MIN_TOPPINGS + " malzeme seçmelisin.");
+        }
+        return sayi;
+      }
+      return sayi - 1;
+    }
+  });
   }
 
 
@@ -189,20 +224,7 @@ function Order({ setOrderData }) {
                 </div>
               </div>
               <div className='screenwidth w-1/2 flex flex-col justify-start gap-6'>
-                <div className="mb-6 mt-10">
-                  <label className="block text-lg font-semibold text-[#292929] mb-5">
-                    Hamur Seç 
-                    <span className="ml-2 text-[#CE2829]">*</span>
-                  </label>
-                  
-                  <select className="w-full bg-[#F8F5EF] text-[#292929] text-xs py-3 px-4 rounded-lg appearance-none focus:outline-none" defaultValue="" required name="hamur">
-                    <option value="" disabled hidden>- Hamur Kalınlığı Seç -</option>
-                    <option value="Süpper İnce">Süpper İnce</option>
-                    <option value="Süpper Normal">Süpper Normal</option>
-                    <option value="Süpper Kalın">Süpper Kalın</option>
-                  </select>
-                </div>
-
+                <DoughSelector />
               </div>
             </div>  
           </section>
@@ -301,15 +323,7 @@ function Order({ setOrderData }) {
             </div>
 
             {/* Sipariş Notu Input Alanı */}
-            <div className='screenwidth w-1/4 flex justify-start font-semibold pb-6'>
-              <input 
-                type="text" 
-                value={siparisNotu} 
-                onChange={notGir} 
-                placeholder="Siparişine eklemek istediğin bir not var mı?" 
-                className="placeholder:text-xs placeholder:text-[#5F5F5F] bg-[#F8F5EF] text-[#292929] text-xs font-light py-3 px-4 rounded-lg appearance-none focus:outline-none w-full"
-              />
-            </div>
+            <NotesInput siparisNotu={siparisNotu} notGir={notGir} />
 
             {/* Yatay Ayırıcı Çizgi */}
             <div className="flex justify-start screenwidth w-1/4 h-px bg-gray-300 mb-6"></div>
@@ -333,11 +347,11 @@ function Order({ setOrderData }) {
                     <span className='text-xs font-semibold'>Sipariş Toplamı</span>
                     <div className='flex flex-row justify-between'>
                       <span className='text-xs text-[#5F5F5F]'>Seçimler</span>
-                      <span className='text-xs text-[#5F5F5F]'>25.00</span>
+                      <span className='text-xs text-[#5F5F5F]'>{secimlerTutari.toFixed(2)}₺</span>
                     </div>
                     <div className='flex flex-row justify-between'>
                       <span className='text-xs text-[#CE2829]'>Toplam</span>
-                      <span className='text-xs text-[#CE2829]'>75.00</span>
+                      <span className='text-xs text-[#CE2829]'>{toplamTutar.toFixed(2)}₺</span>
                     </div>
                   </div>
                 </div>

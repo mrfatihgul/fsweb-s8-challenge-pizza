@@ -17,6 +17,8 @@ function App() {
     notes: "",
     hamur: "",
     adet: 0,
+    secimlerTutari: 0,
+    toplamTutar: 0
   });
 
   return (

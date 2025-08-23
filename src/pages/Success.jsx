@@ -38,11 +38,11 @@ function Success({ orderData }) {
               <span className='text-l text-white font-semibold text-left mb-5'>Sipariş Toplamı</span>
               <p className='text-white mb-1 flex justify-between'>
                 <span className='font-normal'>Seçimler: </span>
-                <span className='font-normal'>Birşeyler</span>
+                <span className='font-normal'>{orderData.secimlerTutari}₺</span>
               </p>
               <p className='text-white flex justify-between'>
                 <span className='font-normal'>Toplam: </span>
-                <span className='font-normal'>Birşeylerler</span>
+                <span className='font-normal'>{orderData.toplamTutar}₺</span>
               </p>
             </div>
           </div>
