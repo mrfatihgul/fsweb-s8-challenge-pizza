@@ -24,9 +24,8 @@ function App() {
     toplamTutar: 0
   });
 
-  let sonToastId = null;
 
-  // State’ler
+
   const [name, setName] = useState("");
   const [pizzaSize, setPizzaSize] = useState("");
   const [adet, setAdet] = useState(1);
@@ -35,8 +34,9 @@ function App() {
   const [toppings, setToppings] = useState(new Set());
   const [hamur, setHamur] = useState("");
 
+  let sonToastId = null;
 
-  // Hesaplamalar
+
   const MIN_TOPPINGS = 4;
   const MAX_TOPPINGS = 10;
   const secimlerTutari = toppings.size * TOPPING_PRICE;
@@ -49,7 +49,7 @@ function App() {
     name.trim().length >= 3 &&
     !!pizzaSize &&
     seciliMalzemeSayısı >= MIN_TOPPINGS &&
-    seciliMalzemeSayısı <= MAX_TOPPINGS;
+    seciliMalzemeSayısı <= MAX_TOPPINGS &&
     adet > 0;
 
   // Fonksiyonlar
@@ -66,39 +66,37 @@ function App() {
     setSiparisNotu(e.target.value);
   }
 
-  function malzemeUyarıMesajı(e) {
-    const seciliyorMu = e.target.checked;
-    const malzeme = e.target.value;
+function malzemeUyarıMesajı(e) {
+  const seciliyorMu = e.target.checked;
+  const malzeme = e.target.value;
 
-    setToppings(prev => {
-      const yeni = new Set(prev);
-      if (seciliyorMu) yeni.add(malzeme);
-      else yeni.delete(malzeme);
-      return yeni;
-    });
-
-    seciliMalzemeSayısınıAyarla(sayi => {
-      if (seciliyorMu) {
-        if (sayi >= MAX_TOPPINGS) {
-          e.preventDefault();
-          if (!toast.isActive(sonToastId)) {
-            sonToastId = toast.error("En fazla " + MAX_TOPPINGS + " malzeme seçebilirsin.");
-          }
-          return sayi;
-        }
-        return sayi + 1;
-      } else {
-        if (sayi <= MIN_TOPPINGS) {
-          e.preventDefault();
-          if (!toast.isActive(sonToastId)) {
-            sonToastId = toast.error("En az " + MIN_TOPPINGS + " malzeme seçmelisin.");
-          }
-          return sayi;
-        }
-        return sayi - 1;
-      }
-    });
+  if (seciliyorMu && toppings.size >= MAX_TOPPINGS) {
+    if (!toast.isActive(sonToastId)) {
+      sonToastId = toast.error("En fazla " + MAX_TOPPINGS + " malzeme seçebilirsin.");
+    }
+    e.preventDefault();
+    return;
   }
+
+  if (!seciliyorMu && toppings.size <= MIN_TOPPINGS) {
+    if (!toast.isActive(sonToastId)) {
+      sonToastId = toast.error("En az " + MIN_TOPPINGS + " malzeme seçmelisin.");
+    }
+    e.preventDefault();
+    return; 
+  }
+
+  setToppings(prev => {
+    const yeni = new Set(prev);
+    if (seciliyorMu) yeni.add(malzeme);
+    else yeni.delete(malzeme);
+    return yeni;
+  });
+
+  seciliMalzemeSayısınıAyarla(sayi => (seciliyorMu ? sayi + 1 : sayi - 1));
+}
+
+
 
   function handlePizzaSizeChange(e) {
   setPizzaSize(e.target.value);

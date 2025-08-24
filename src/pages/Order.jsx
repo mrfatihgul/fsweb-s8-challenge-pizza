@@ -36,16 +36,17 @@ function Order({
   MIN_TOPPINGS,
   MAX_TOPPINGS  
 }) {
+  
   let sonToastId = null;
-  const navigate = useNavigate(); // YENİ EKLE
+  const navigate = useNavigate();
 
-  async function formuGonder(e) { // YENİ EKLE
+  async function formuGonder(e) {
     e.preventDefault();
     if (seciliMalzemeSayısı < MIN_TOPPINGS) {
       if (!toast.isActive(sonToastId)) {
         sonToastId = toast.error("En az " + MIN_TOPPINGS + " malzeme seçmelisin.");
       }
-      return; // işlemi durdur
+      return; 
     }
 
     if (adet <= 0) {
@@ -74,7 +75,7 @@ function Order({
 
       const cevap = await axios.post("https://jsonplaceholder.typicode.com/posts", payload);
       setOrderData(cevap.data);
-      navigate("/success"); // yönlendirme burada olacak
+      navigate("/success");
     } catch (hata) {
       console.error("Sipariş gönderilirken hata oluştu: ", hata);
     }
