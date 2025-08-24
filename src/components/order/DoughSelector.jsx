@@ -1,5 +1,7 @@
 function DoughSelector({ hamur, setHamur }) {
     return (
+        <>
+        <div className='screenwidth w-1/2 flex flex-col justify-start gap-6'>
         <div className="mb-6 mt-10">
             <label className="block text-lg font-semibold text-[#292929] mb-5">
             Hamur Seç 
@@ -19,6 +21,8 @@ function DoughSelector({ hamur, setHamur }) {
             <option value="Süpper Kalın">Süpper Kalın</option>
             </select>
         </div>
+        </div>
+        </>
     );
 }
 

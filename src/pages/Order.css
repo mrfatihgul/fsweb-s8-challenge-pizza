@@ -16,6 +16,36 @@ a, h1, h2, p {
   font-family: "Satisfy";
 } 
 
+/* Checkbox için özel stil */
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Checked olunca arka plan sarı olacak */
+.checkbox:checked {
+  background-color: #FDC913;
+  border-color: #FDC913;
+}
+
+/* Checked olduğunda tik işareti eklenecek */
+.checkbox:checked::after {
+  content: "✔";
+  color: gray;   /* tik gri olacak */
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 @media (max-width: 768px) {
   /* 2 sütun yap */
   .malzemeler-kapsayici {

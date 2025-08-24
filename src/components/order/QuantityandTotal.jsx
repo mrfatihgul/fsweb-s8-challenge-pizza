@@ -27,7 +27,7 @@ function QuantityandTotal({ sayiAzalt, sayiArttir, adet, secimlerTutari, toplamT
                 </div>
             </div>
             <div className='py-2 border bg-[#FDC913] hover:bg-yellow-500 border-[#FDC913] rounded w-full'>
-                <button type="submit" disabled={!isValid} className='flex flex-row justify-center text-xs w-full'>
+                <button type="submit" className='flex flex-row justify-center text-xs w-full'>
                 SİPARİŞ VER
                 </button>
             </div>

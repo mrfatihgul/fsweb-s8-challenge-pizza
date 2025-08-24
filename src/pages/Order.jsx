@@ -10,13 +10,75 @@ import PizzaHeader from '../components/order/PizzaHeader.jsx';
 import QuantityandTotal from '../components/order/QuantityandTotal.jsx';
 import SizeSelector from '../components/order/SizeSelector.jsx';
 import ToppingsSelector from '../components/order/ToppingsSelector.jsx';
+import { useNavigate } from "react-router-dom"; 
+import axios from "axios";
+
 
 function Order({
   name, setName,
+  pizzaSize,
   adet,
-  siparisNotu,secimlerTutari, toplamTutar, isValid,
-  formuGonder, sayiAzalt, sayiArttir, notGir, malzemeUyarıMesajı, handlePizzaSizeChange, hamur, setHamur
+  siparisNotu,
+  secimlerTutari, 
+  toplamTutar, 
+  isValid,
+  formuGonder, 
+  sayiAzalt, 
+  sayiArttir, 
+  notGir, 
+  malzemeUyarıMesajı, 
+  handlePizzaSizeChange, 
+  hamur, 
+  setHamur,
+  toppings,
+  seciliMalzemeSayısı,
+  setOrderData,
+  MIN_TOPPINGS,
+  MAX_TOPPINGS  
 }) {
+  let sonToastId = null;
+  const navigate = useNavigate(); // YENİ EKLE
+
+  async function formuGonder(e) { // YENİ EKLE
+    e.preventDefault();
+    if (seciliMalzemeSayısı < MIN_TOPPINGS) {
+      if (!toast.isActive(sonToastId)) {
+        sonToastId = toast.error("En az " + MIN_TOPPINGS + " malzeme seçmelisin.");
+      }
+      return; // işlemi durdur
+    }
+
+    if (adet <= 0) {
+      toast.error("En az 1 ürün seçmelisiniz!");
+      return;
+    }
+
+    if (!isValid) {
+      toast.error("Lütfen tüm alanları doldurun!"); 
+      console.log("GEÇERSİZ FORM");
+      return;
+    }
+    try {
+      const formVerisi = new FormData(e.currentTarget);
+      const selectedToppings = formVerisi.getAll("toppings");
+      const payload = {
+        name: name.trim(),
+        size: pizzaSize,
+        toppings: selectedToppings,
+        notes: siparisNotu.trim(),
+        hamur: formVerisi.get("hamur"),
+        adet: adet,
+        secimlerTutari: secimlerTutari.toFixed(2),
+        toplamTutar: toplamTutar.toFixed(2),
+      };
+
+      const cevap = await axios.post("https://jsonplaceholder.typicode.com/posts", payload);
+      setOrderData(cevap.data);
+      navigate("/success"); // yönlendirme burada olacak
+    } catch (hata) {
+      console.error("Sipariş gönderilirken hata oluştu: ", hata);
+    }
+  }
   return (
     <>  
        <form onSubmit={formuGonder}>
@@ -41,14 +103,12 @@ function Order({
           <div className='w-full flex justify-center pb-8'>
             <div className='screenwidth w-1/4 flex'>
               <SizeSelector handlePizzaSizeChange={handlePizzaSizeChange} />
-              <div className='screenwidth w-1/2 flex flex-col justify-start gap-6'>
-                <DoughSelector hamur={hamur} setHamur={setHamur}/>
-              </div>
-            </div>  
-          </div>
+              <DoughSelector hamur={hamur} setHamur={setHamur}/>
+            </div>
+          </div>  
 
           {/* Ek Malzeme Ekleme */}
-          <ToppingsSelector malzemeUyarıMesajı={malzemeUyarıMesajı}/>
+          <ToppingsSelector malzemeUyarıMesajı={malzemeUyarıMesajı} toppings={toppings}/>
 
           {/* Sipariş Notu, Adet Ekleme ve Sipariş Ver Butonu*/}
           <section className="flex flex-col items-center justify-start w-full">

@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from "axios";
 import { pizza } from "./data";
 
 
@@ -51,39 +50,10 @@ function App() {
     !!pizzaSize &&
     seciliMalzemeSayısı >= MIN_TOPPINGS &&
     seciliMalzemeSayısı <= MAX_TOPPINGS;
+    adet > 0;
 
   // Fonksiyonlar
-  async function formuGonder(e) {
-    e.preventDefault();
-    if (!isValid) {
-      console.log("GEÇERSİZ FORM");
-      return;
-    }
-    try {
-      const formVerisi = new FormData(e.currentTarget);
-      const selectedToppings = formVerisi.getAll("toppings");
-      const payload = {
-        name: name.trim(),
-        size: pizzaSize,
-        toppings: selectedToppings,
-        notes: siparisNotu.trim(),
-        hamur: formVerisi.get("hamur"),
-        adet: adet,
-        secimlerTutari: secimlerTutari.toFixed(2),
-        toplamTutar: toplamTutar.toFixed(2),
-      };
-
-      const cevap = await axios.post("https://jsonplaceholder.typicode.com/posts", payload);
-      setOrderData(cevap.data);
-      navigate("/success");
-    } catch (hata) {
-      console.error("Sipariş gönderilirken hata oluştu: ", hata);
-      if (!toast.isActive(sonToastId)) {
-        sonToastId = toast.error("Sipariş gönderilemedi!");
-      }
-    }
-  }
-
+  
   function sayiAzalt() {
     if (adet >= 1) setAdet(adet - 1);
   }
@@ -153,15 +123,16 @@ function App() {
               secimlerTutari={secimlerTutari}
               toplamTutar={toplamTutar}
               isValid={isValid}
-              formuGonder={formuGonder}
               sayiAzalt={sayiAzalt}
               sayiArttir={sayiArttir}
               notGir={notGir}
               malzemeUyarıMesajı={malzemeUyarıMesajı}
-              setOrderData={setOrderData}
               handlePizzaSizeChange={handlePizzaSizeChange}
               hamur={hamur}
               setHamur={setHamur}
+              setOrderData={setOrderData}
+              MIN_TOPPINGS={MIN_TOPPINGS}
+              MAX_TOPPINGS={MAX_TOPPINGS}
             />
           }
         />
